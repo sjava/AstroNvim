@@ -27,7 +27,7 @@ return {
     config = require "plugins.configs.lspconfig",
   },
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "sjava/null-ls.nvim",
     dependencies = {
       {
         "jay-babu/mason-null-ls.nvim",
