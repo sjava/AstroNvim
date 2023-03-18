@@ -1012,7 +1012,7 @@ function M.component.nav(opts)
     scrollbar = { padding = { left = 1 }, hl = { fg = "scrollbar" } },
     surround = { separator = "right", color = "nav_bg" },
     hl = M.hl.get_attributes "nav",
-    update = { "CursorMoved", "BufEnter" },
+    update = { "CursorMoved", "CursorMovedI", "BufEnter" },
   }, opts)
   return M.component.builder(M.utils.setup_providers(opts, { "ruler", "percentage", "scrollbar" }))
 end
@@ -1026,7 +1026,11 @@ function M.component.cmd_info(opts)
     macro_recording = {
       icon = { kind = "MacroRecording", padding = { right = 1 } },
       condition = M.condition.is_macro_recording,
-      update = { "RecordingEnter", "RecordingLeave" },
+      update = {
+        "RecordingEnter",
+        "RecordingLeave",
+        callback = vim.schedule_wrap(function() vim.cmd.redrawstatus() end),
+      },
     },
     search_count = {
       icon = { kind = "Search", padding = { right = 1 } },
@@ -1055,7 +1059,11 @@ function M.component.mode(opts)
     spell = false,
     surround = { separator = "left", color = M.hl.mode_bg },
     hl = M.hl.get_attributes "mode",
-    update = "ModeChanged",
+    update = {
+      "ModeChanged",
+      pattern = "*:*",
+      callback = vim.schedule_wrap(function() vim.cmd.redrawstatus() end),
+    },
   }, opts)
   if not opts["mode_text"] then opts.str = { str = " " } end
   return M.component.builder(M.utils.setup_providers(opts, { "mode_text", "str", "paste", "spell" }))
