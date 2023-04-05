@@ -5,15 +5,15 @@ local ui = require "astronvim.utils.ui"
 local maps = { i = {}, n = {}, v = {}, t = {} }
 
 local sections = {
-  f = { name = "󰍉 Find" },
-  p = { name = "󰏖 Packages" },
-  l = { name = " LSP" },
-  u = { name = " UI" },
-  b = { name = "󰓩 Buffers" },
-  d = { name = " Debugger" },
-  g = { name = " Git" },
-  S = { name = "󱂬 Session" },
-  t = { name = " Terminal" },
+  f = { desc = "󰍉 Find" },
+  p = { desc = "󰏖 Packages" },
+  l = { desc = " LSP" },
+  u = { desc = " UI" },
+  b = { desc = "󰓩 Buffers" },
+  d = { desc = " Debugger" },
+  g = { desc = " Git" },
+  S = { desc = "󱂬 Session" },
+  t = { desc = " Terminal" },
 }
 if not vim.g.icons_enabled then vim.tbl_map(function(opts) opts.name = opts.name:gsub("^.* ", "") end, sections) end
 
@@ -135,6 +135,7 @@ if is_available "gitsigns.nvim" then
   maps.n["]g"] = { function() require("gitsigns").next_hunk() end, desc = "Next Git hunk" }
   maps.n["[g"] = { function() require("gitsigns").prev_hunk() end, desc = "Previous Git hunk" }
   maps.n["<leader>gl"] = { function() require("gitsigns").blame_line() end, desc = "View Git blame" }
+  maps.n["<leader>gL"] = { function() require("gitsigns").blame_line { full = true } end, desc = "View full Git blame" }
   maps.n["<leader>gp"] = { function() require("gitsigns").preview_hunk() end, desc = "Preview Git hunk" }
   maps.n["<leader>gh"] = { function() require("gitsigns").reset_hunk() end, desc = "Reset Git hunk" }
   maps.n["<leader>gr"] = { function() require("gitsigns").reset_buffer() end, desc = "Reset Git buffer" }
